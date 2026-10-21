@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+ENV/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# Data (Raw large downloads if archived)
+data/raw/*.zip
+
+# OS artifacts
+.DS_Store
+Thumbs.db

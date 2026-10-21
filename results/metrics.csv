@@ -1,0 +1,7 @@
+Method,Features,Acc,Prec,Recall,F1,FPR,Time (us),Size
+Entropy only,1,0.7478,0.7025,0.8597,0.7732,0.3641,8.91,0.09
+Rule-based,few (3),0.8108,0.7624,0.903,0.8268,0.2813,18.52,0.22
+Logistic Regression,multiple (10),0.8732,0.875,0.8708,0.8729,0.1245,343.23,1.77
+Decision Tree,multiple (37),0.903,0.9106,0.8936,0.902,0.0877,309.35,17.44
+Random Forest,multiple (37),0.9517,0.9617,0.941,0.9512,0.0375,3354.08,22005.8
+"Temporal test (RF, later period)",multiple (37),0.7069,0.9364,0.444,0.6024,0.0302,3354.08,22005.8

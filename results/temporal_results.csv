@@ -1,0 +1,4 @@
+experiment,type,description,accuracy,precision,recall,f1,fpr,roc_auc
+In-Period Baseline,Family-Holdout (Disjoint Botnets),Random split within training slice,0.9772137431843615,0.9742097293204619,0.9803800180960998,0.9772851344615604,0.025952380952380952,0.9977137244630696
+Drift / Holdout Test,Family-Holdout (Disjoint Botnets),"Train families: 6, Test holdout families: 27",0.7068979884339116,0.9363840854772951,0.44398893443988935,0.6023649641637839,0.030166666666666668,0.8795268645357687
+Drift Delta (Test - Baseline),Family-Holdout (Disjoint Botnets),Delta = Drift - In_Period,-0.2703157547504499,-0.03782564384316678,-0.5363910836562105,-0.37492017029777647,0.0042142857142857156,-0.11818685992730094
