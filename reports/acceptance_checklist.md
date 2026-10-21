@@ -1,6 +1,6 @@
 # Acceptance Criteria Verification Checklist
 **Project:** Lightweight DNS-Based DGA Detection for Early Botnet Identification  
-**Verification Date:** 2026-10-07 22:46:02  
+**Verification Date:** 2026-10-21 19:57:16  
 
 | Requirement / Item | Verification Status | Notes / Evidence |
 |:---|:---:|:---|

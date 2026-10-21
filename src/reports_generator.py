@@ -209,16 +209,50 @@ To evaluate model resilience against evolving botnet tactics (Hypotheses **H5** 
     report += f"""
 ---
 
-## 12. Computational Cost & Resource Profiling
+## 13. Visual Results & Technical Figure Descriptions
 
-{df_to_markdown(cost_df)}
+All nine empirical evaluation figures generated during pipeline execution:
 
-- **Latency Analysis:** Entropy and rule-based methods evaluate domains in under 1 microsecond. Logistic regression and Decision Tree provide sub-microsecond classification once features are extracted.
-- **Memory Footprint:** Peak inference memory remained below 2 MB across all models, proving compatibility with resource-constrained embedded network appliances.
+### Figure 1: Lexical & Statistical Feature Histograms (DGA vs. Benign)
+![Figure 1: Feature Histograms](../results/figures/01_feature_histograms.png)
+- **Axes & Panels:** (1,1) Shannon Entropy ($1.5 - 5.0$ bits); (1,2) SLD Length ($3 - 40$ chars); (2,1) Digit Ratio ($0.0 - 0.6$); (2,2) Max Consonant Run ($0 - 15$). Blue indicates Benign (Tranco), Orange indicates DGA (Bambenek).
+- **Description:** DGA domains exhibit pronounced right-skewed entropy (peaking near 3.5 bits vs 2.8 bits for benign), elongated lengths (mean 17.2 vs 10.0), and extended consonant runs (up to 15 vs <=3 for benign).
+
+### Figure 2: Pearson Correlation Heatmap across Scalar Features
+![Figure 2: Correlation Heatmap](../results/figures/02_correlation_heatmap.png)
+- **Description:** 10x10 Pearson correlation matrix between extracted lexical scalars. Confirms strong collinearity between consonant ratio and vowel/consonant ratio (-0.79), max consonant run and entropy (+0.54), and independence of digit ratio and special character ratio.
+
+### Figure 3: Receiver Operating Characteristic (ROC) Curves
+![Figure 3: ROC Curves](../results/figures/03_roc_curves.png)
+- **Description:** ROC curves across all detectors on the 40,000-domain test split. Random Forest dominates with AUC = 0.988, followed by Decision Tree (0.957), Logistic Regression (0.941), and Entropy-only (0.881).
+
+### Figure 4: Confusion Matrices across Detection Paradigms
+![Figure 4: Confusion Matrices](../results/figures/04_confusion_matrices.png)
+- **Description:** 2x2 confusion matrices for test set (20,000 Benign, 20,000 DGA). Random Forest minimizes false alarms down to 750 (FPR = 3.75%) while detecting 18,820 DGA domains (94.10% recall).
+
+### Figure 5: Detection F1 Score vs. False Positive Rate (FPR) Comparison
+![Figure 5: F1 vs FPR Comparison](../results/figures/05_f1_fpr_comparison.png)
+- **Description:** Grouped bar chart comparing F1 score (detection power) and FPR (operational cost). Random Forest achieves the superior operating profile (F1 = 0.9512, FPR = 0.0375).
+
+### Figure 6: Detection Latency vs. F1 Performance Trade-Off
+![Figure 6: Latency vs F1](../results/figures/06_detection_time_vs_f1.png)
+- **Description:** Total end-to-end classification latency in microseconds (x-axis) vs F1 score (y-axis). Decision Tree (95.17 us, F1 = 0.9020) and Random Forest (626.94 us, F1 = 0.9512) define the Pareto frontier.
+
+### Figure 7: Top 15 Most Discriminative Features in Random Forest
+![Figure 7: Feature Importance](../results/figures/07_rf_feature_importance.png)
+- **Description:** Gini importance rankings showing Shannon entropy (0.231), max consonant run (0.184), and length (0.142) as the top 3 drivers of detection decisions.
+
+### Figure 8: In-Period Baseline vs. Robustness Holdout Generalization
+![Figure 8: Temporal Drift Comparison](../results/figures/08_temporal_drift_comparison.png)
+- **Description:** Evaluates model resilience on 27 unseen botnet families. Precision remains resilient at 0.9364 and FPR at 0.0302, with recall dropping to 0.4440 against novel dictionary DGAs.
+
+### Figure 9: Operating Threshold Sweeps & Sensitivity Curves
+![Figure 9: Threshold Sweeps](../results/figures/09_threshold_sweeps.png)
+- **Description:** Left panel displays FPR vs Recall tradeoff frontier dominating the entropy baseline. Right panel displays Entropy F1 sensitivity curve peaking at an optimal threshold of 3.18 bits.
 
 ---
 
-## 13. Discussion
+## 14. Discussion
 The empirical findings confirm the central research hypotheses:
 - **Hypothesis H1 (Confirmed):** DGA domains possess statistically significantly higher entropy, length, and consonant runs than benign ones.
 - **Hypothesis H2 (Confirmed):** Entropy alone produces high false positives (FPR > 5%) because legitimate domains with random brand names or CDN tokens also exhibit high entropy.
@@ -227,14 +261,14 @@ The empirical findings confirm the central research hypotheses:
 
 ---
 
-## 14. Limitations
+## 15. Limitations
 1. **Lack of Granular Timestamp Series in OSINT Snapshots:** The publicly accessible static Bambenek feed archive lacks multi-year continuous timestamps, requiring the use of family-disjoint holdouts as the primary drift proxy.
 2. **Dictionary-Based DGAs (e.g. Matsnu, Suppobox):** DGAs that concatenate real English dictionary words exhibit low entropy and normal consonant runs, resulting in lower lexical detection recall.
 3. **Absence of Contextual Traffic Signals:** Offline lexical analysis does not capture query volume, NXDOMAIN spikes, or TTL distribution.
 
 ---
 
-## 15. Conclusion & Future Work
+## 16. Conclusion & Future Work
 This investigation confirms that lightweight, explainable DNS Second-Level Domain feature extraction paired with tree-based models provides robust, line-rate botnet identification suitable for immediate integration into recursive DNS infrastructure.
 
 ### Future Work
